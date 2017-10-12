@@ -22,3 +22,34 @@ END;
 /
 
 SELECT * FROM almacen;
+
+-- Creación de Tabla Vendedor
+CREATE TABLE vendedor(
+  numero_vendedor INTEGER,
+  nombre_vendedor VARCHAR2(60),
+  area_ventas VARCHAR2(60),
+  CONSTRAINT pk_nv PRIMARY KEY(numero_vendedor)
+);
+
+DESCRIBE almacen;
+DESCRIBE vendedor;
+
+-- Creación de tabla Cliente
+CREATE TABLE cliente(
+  numero_cliente INTEGER,
+  numero_almacen INTEGER,
+  nombre_cliente VARCHAR2(60),
+  CONSTRAINT pk_nc PRIMARY KEY(numero_cliente),
+  CONSTRAINT fk1_na FOREIGN KEY(numero_almacen) REFERENCES almacen(numero_almacen)
+);
+
+-- Creación de tabla Ventas
+CREATE TABLE ventas(
+  id_ventas INTEGER,
+  numero_cliente INTEGER,
+  numero_vendedor INTEGER,
+  monto_venta FLOAT(126),
+  CONSTRAINT pk_idvv1 PRIMARY KEY(id_ventas),
+  CONSTRAINT fk_nc1 FOREIGN KEY(numero_cliente) REFERENCES cliente(numero_cliente),
+  CONSTRAINT fk_nv1 FOREIGN KEY(numero_vendedor) REFERENCES vendedor(numero_vendedor)
+);
