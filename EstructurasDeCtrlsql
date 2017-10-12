@@ -1,0 +1,43 @@
+
+/*GENERAR UN PROCEDIMIENTO ALMACENADO QUE INSERTE 1000 REGISTROS CON ID'S
+DIFERENTES Y CON UN VALOR DEL NOMBRE "ADRIÁN" Y EDAD "21".*/
+
+-- Creación de tabla MENORES_EDAD
+CREATE TABLE menores_edad(
+  id_menores INTEGER PRIMARY KEY,
+  nombre VARCHAR2(80),
+  edad INTEGER
+);
+
+-- Creación de Procedimiento que inserta 1000 registros
+CREATE OR REPLACE PROCEDURE generar_mil
+  AS BEGIN
+  FOR i IN 1..1000 LOOP
+    INSERT INTO menores_edad VALUES(i,'Adrián',21);
+  END LOOP;
+END;
+/
+
+-- Ejecución de Procedimiento
+BEGIN
+  generar_mil();
+END;
+/
+
+SELECT * FROM menores_edad;
+SELECT COUNT(*) FROM menores_edad;  -- Cuenta los registros enla tabla
+
+
+/*GENERAR UN PROCEDIMIENTO ALMACENADO QUE NOS HAGA UNA ACTUALIZACIÓN DE TAL
+MANERA QUE IMPÍDA QUE ACTUALICEN EDADES MENORES A 18 AÑOS.DEBE MARCAR UN
+ERROR.*/
+
+CREATE OR REPLACE PROCEDURE actualizar_edad(age IN INTEGER, id IN INTEGER)
+  AS BEGIN
+  IF age < 18 THEN
+    RAISE_APPLICATION_ERROR(-20001,'No se aceptan edades menores a 18.'); -- 20001 es el número de error
+  ELSE
+    UPDATE menores_edad SET edad = age WHERE id_menores = ID;
+  END IF;
+END;
+/
